@@ -48,58 +48,115 @@ class Sql {
   // It does:
   // UPDATE posts SET title="new" WHERE id="123"
 
-// Here Update thing will take Up All things Similar only Differnce is here we will call function 
-async updatePost(slug,{title,  content, featuredImage, status}){
-  try{
-     return await this.databases.updateDocument(
-      config.appWriteDataBaseId,
-      config.appWriteCollectionid,
-      {
-        title,
-        content,
-        featuredImage,
-        status
-      }
-     )
+  // Here Update thing will take Up All things Similar only Differnce is here we will call function
+  async updatePost(slug, { title, content, featuredImage, status }) {
+    try {
+      return await this.databases.updateDocument(
+        config.appWriteDataBaseId,
+        config.appWriteCollectionid,
+        {
+          title,
+          content,
+          featuredImage,
+          status,
+        },
+      );
+    } catch (error) {
+      throw error;
+    }
   }
-  catch(error){
-    throw error
+
+  // Here Lets Use Delete Post Thing
+  async deletePost(slug) {
+    try {
+      return await this.databases.deleteDocument(
+        config.appWriteDataBaseId,
+        config.appWriteCollectionid,
+        slug,
+      );
+      return true; // Here After Deleting the Thing you will Return true
+    } catch (error) {
+      throw error;
+      // If Anythings get happens
+      return false;
+    }
+  }
+
+  // Even I Might Feell Why Do I need get Function
+  // First You Create 5 Post
+  // Ui Will Show the 5 POSTS BUT AS SOON AS I REFRESH THE PAGE GONE
+  // REACT UPADTES TO AVOID THESE
+  // YOU WILL HAVE ONE GET FUNCTION WHERE YOU WILL CREATE oNE Function whuch gets all posts in DATABASE S
+  // THEN YOU CAN ADD USEEFFECT WHEN REFERSH HAPPENS CALL THAT OPARTICLUAR FUNCTION
+
+  // and More Thing is When a user Clicks on one pOST YOU will Redirect him top Particluar Page and from thier you
+  // will fetch particular post detaisl and show
+  async getPost(slug) {
+    try {
+      return await this.databases.getDocument(
+        config.appWriteDataBaseId,
+        config.appWriteCollectionid,
+        slug,
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // getting all post Which are Active
+  async getPosts(queries = [Query.equal("status", "active")]) {  //  Here As You can See it is A Default a Value
+    try {
+      return await this.databases.listDocuments(
+        config.appWriteDataBaseId,
+        config.appWriteCollectionid,
+        queries
+
+      );
+    } catch (error) {
+      throw error;
+      return false;
+    }
+  }
+
+  // Here I WILL Create the Storage Thing For the Storage of the Files 
+
+  async uploadFile(file){
+    try{
+      return await this.bucket.createFile(
+        config.appWriteBucketid,
+        ID.unique(),
+        file
+      )
+    }
+    catch(error){
+      throw error
+
+    }
 
   }
 
-}
+  // here Deleting the File
+  async DeleteFile(fileid){
+    try{
+      await this.bucket.deleteFile(
+        config.appWriteBucketid,
+        fileid
+      )
+     return true
+    }
+    catch(error){
+      throw error 
+    
+    }
+  }
 
-
-// Here Lets Use Delete Post Thing 
-async deletePost(slug){
-  try{
-    return await this.databases.deleteDocument(
-       config.appWriteDataBaseId,
-      config.appWriteCollectionid,
-      slug
-
+  getFilePreview(fileid){
+    return this.bucket.getFilePreview(
+      config.appWriteBucketid,
+      fileid
     )
-    return true // Here After Deleting the Thing you will Return true 
-
-  }
-  catch(error){
-    throw error
-    // If Anythings get happens
-    return false
   }
 }
-}
-
-
-// Even I Might Feell Why Do I need get Function 
-// First You Create 5 Post 
-// Ui Will Show the 5 POSTS BUT AS SOON AS I REFRESH THE PAGE GONE 
-// REACT UPADTES TO AVOID THESE 
-// YOU WILL HAVE ONE GET FUNCTION WHERE YOU WILL CREATE oNE Function whuch gets all posts in DATABASE S
-// THEN YOU CAN ADD USEEFFECT WHEN REFERSH HAPPENS CALL THAT OPARTICLUAR FUNCTION 
-
-// and More Thing is When a user Clicks on one pOST YOU will Redirect him top Particluar Page and from thier you 
-// will fetch particular post detaisl and show 
 
 const NewObject = new Sql();
 export default NewObject;
