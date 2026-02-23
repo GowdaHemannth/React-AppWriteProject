@@ -1,6 +1,8 @@
 
+import { useEffect, useState } from 'react'
 import './App.css'
-
+import {useDispatch} from 'react-redux'
+import authservice from './appwrite/auth.js'
 function App() {
 
 
@@ -11,7 +13,18 @@ function App() {
   // console.log(process.env.REACT_APP_APPWRITE_URL);
   // console.log(import.meta.env.VITE_APPWRITE_URL);
   
-  
+  // Here we will be Using LoADING Becuase when loading treu still hasnt got the user Data 
+  const[Loading,Setloading]=useState(true)
+
+  useEffect(()=>{
+    // Since Its An Async Call It Will Return the Promise SO uSE THEN aND cATCH OR fINALLY TO gET THE uSER 
+    authservice.GetUser()
+    .then((userData)=>{
+      // here Disaptch it Into the 
+    })
+
+  },[])  // These Empty Array State Defines that It Loads only once when its mounted
+  const dispatch=useDispatch()
   return (
     <>
     <h1>Lets DO Some Real-World-Projects</h1>
