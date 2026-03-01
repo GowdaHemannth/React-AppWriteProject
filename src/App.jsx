@@ -49,8 +49,9 @@ const dispatch=useDispatch()
 return (
 <div className="min-h-screen flex justify-center bg-gray-400 pt-10">
   <div className="w-full max-w-4xl">
-    <Header />
-    <Footer />
+    {/* <Header />
+    <Footer /> */}
+    <h1>Hii Buddy</h1>
   </div>
 </div>
 );

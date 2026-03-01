@@ -69,7 +69,10 @@ function Header() {
       })}
         {/* iF THE Auth Person is True in the Sense if he is Loggin then only Show logout Button */}
         {authstatus && ( // Here Thewse Pices of Code ias Simple If The User Is Active then Only Dispaly the  Log Out Code
-          <li>
+          //  Here in These Approach The Major Important Part Is IF A Person is Login That is His Autg Satatus True then Only S
+          // If Auth status true thrn only Show hhim the Logout Button
+          // 
+          <li>  
             <LogoutButton/>
           </li>
         )}
