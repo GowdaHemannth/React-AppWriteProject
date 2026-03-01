@@ -12,7 +12,7 @@ class Sql {
   bucket; // I Might think here i should have got error why am i not geeting because database here databases and bucket uses ; these menas class fields plus its define dinside the class
   constructor() {
     this.client
-      .setEndpoint(config.appWriteUrl)
+      .setEndpoint(config.appWriteUrl)   // Here Config .AppWrite We are Writtng is Nothing but the object thing
       .setProject(config.appWriteProjectId);
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
@@ -96,7 +96,7 @@ class Sql {
       return await this.databases.getDocument(
         config.appWriteDataBaseId,
         config.appWriteCollectionid,
-        slug,
+        slug,  // Here ist Uniqe Id
       );
     } catch (error) {
       throw error;
