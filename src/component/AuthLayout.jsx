@@ -29,5 +29,7 @@ export default function Protected({ chidren, authentication = true }) {
     }
    setLoader(false)
   }, [authStatus,authentication,navigation]);
-  return <div></div>;
+
+  //  Here Basically We Are Using these For the Redirection OR sOMETHING LIKE TAHT 
+  return Loader?<h1>Loading...</h1> :<>{chidren}</>
 }
