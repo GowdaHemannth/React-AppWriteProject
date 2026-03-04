@@ -35,11 +35,33 @@ function PostForm({ post }) {
       // }
 
       // tHESE mANY Things Are accepted in file
+      // Here You Might thinkg how do i gte these arry  like
+      // here in the Input Form WHEN I FILL IMAGE PART IT RETURNS TWO THINGS ONE IS FILE OBJECT OTHER IS JSUT NANE SO WHEN UPLOADING WE NEEDED THESE
       const file = data.image[0] ? NewObject.uploadFile(data.image[0]) : null;
 
       // Think user Has Updated the Psot tahts why you are Getting file output So hence Here
       if (file) {
         NewObject.deletePost(post.featuredImage);
+      }
+      // Now Comes the Updation Part
+      //    here these Psot id is the Original ID
+      const dbPost = await NewObject.updatePost(post.$id, {
+        ...data,
+        // Just Spread the Data if the File Abvaibe then Update it Through the new File id esle keep the Past one
+        featuredImage: file ? file.$id : post.featuredImage,
+      });
+      if (dbPost) {
+        navigate(`/post/${dbPost.$id}`);
+      }
+    } else {
+      const file = await NewObject.uploadFile(data.image[0]);
+      if (file) {
+        data.featuredImage = file.$id;
+        //    Might Think What is These UserData once user loggin You GAot their Dat with id
+        const dbpost = await NewObject.createPost({
+          ...data,
+          userId: UserData.$id,
+        });
       }
     }
   };
