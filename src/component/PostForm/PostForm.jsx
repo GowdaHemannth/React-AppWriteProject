@@ -1,12 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, input, RTE } from "../index.js";
 import NewObject from "../../appwrite/db.js";
 import { useNavigate } from "react-router-dom";
+import { Button, input, RTE, Select } from "../index.js";
 // You Might Have Forgotten These Thing is Used to Extarxt the States from the
 import { useSelector } from "react-redux";
 function PostForm({ post }) {
-  const { register, handlesubmit, watch, setValue, control, getValues } =
+  const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
         title: post?.title || "",
@@ -65,7 +66,103 @@ function PostForm({ post }) {
       }
     }
   };
-  return <div></div>;
+
+  //  Callback is The Best Prcatice
+  const slugTransform = useCallback((value) => {
+    if (value && typeof value === "string") {
+      return value
+        .trim()
+        .toLowerCase.replace(/[^a-zA-Z\d\s]+/g, "-")
+        .replace(/\s/g, "-");
+    }
+    return "";
+  }, []);
+
+  // Now Comes The Most Imporatnt Part
+
+  // Here we will doing unsubscribe Jsut BECAUSE
+  // IMAGINE IN STEP 1-->>> USERS ENTER THE FORM CHANGES WATCH WAXTHES IF USER ENTERS ANYTHING IN TITLE
+  // WATCH TAKE STHAT INPUT SET THE SLUG VALUE ACCRODING TO THE SLUGTRANFORM
+  // now if he left the page again comes and type since we have taken subscription for the first watch value
+  // we need to unsubscribe otherwise if user closes tab
+  // comes for the change title watch value will create slug but since its been calling that subscribe it will crete the
+  // it will createthe unnessecry memory
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === "title") {
+        setValue("slug", slugTransform(value.title), { shouldValidate: true });
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, setValue, slugTransform]);
+
+  return (
+    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+      <div className="w-2/3 px-2">
+        {/* Here Title Thing */}
+        <input
+          label="Title"
+          placeholder="Title"
+          className="mb-4"
+          {...register("title", { required: true })}
+        />
+        {/* here */}
+        <input
+          label="Slug"
+          placeholder="Slug"
+          className="mb-4"
+          {...register("slug", { required: true })}
+          onInput={(e) => {
+            setValue("slug", slugTransform(e.currentTarget.value), {
+              shouldValidate: true,
+            });
+          }}
+        />
+
+        {/* RTE EDITOR                                             hERE hOW DE wE GET THE dEFAULt ValueSince we have a;ready takken value from post which will value content */}
+        {/* From the DataBase We Will gwt thw Value  */}
+        <RTE
+          label="Content :"
+          name="content"
+          control={control}
+          defaultValue={getValues("content")}
+        />
+      </div>
+
+      {/*Now Here Come the Aquisation of thr image  */}
+      <div className="w-1/3 px-2">
+        <input
+          label="FeaturedIamge"
+          type="file"
+          className="mb-4"
+          accept="image/png, image/jpg, image/jpeg, image/gif"
+          {...register("image", { required: !post })}
+        />
+        {post && (
+          <div className="w-full mb-4">
+            <img
+              src={appwriteService.getFilePreview(post.featuredImage)}
+              alt={post.title}
+              className="rounded-lg"
+            />
+          </div>
+        )}
+      </div>
+      <Select
+        options={["active", "inactive"]}
+        label="Status"
+        className="mb-4"
+        {...register("status", { required: true })}
+      />
+      <Button
+        type="submit"
+        bgColor={post ? "bg-green-500" : undefined}
+        className="w-full"
+      >
+        {post ? "Update" : "Submit"}
+      </Button>
+    </form>
+  );
 }
 
 export default PostForm;

@@ -33,7 +33,7 @@ function Login() {
       setError(error.message);
     }
   };
-  return;
+  return(
   <div className="flex items-center justify-center w-full">
     <div className="mb-2 flex justify-center">
       <span className="inline-block w-full max-w-[100px]">
@@ -86,7 +86,9 @@ function Login() {
        >Sgin in Into Your Account</Button>
       </div>
     </form>
-  </div>;
+  </div>
+  )
 }
+
 
 export default Login;
