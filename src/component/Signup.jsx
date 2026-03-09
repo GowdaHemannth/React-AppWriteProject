@@ -55,12 +55,12 @@ function Signup() {
                       label='Full-Name'
                         placeholder="Enter Your Full Name"
                     {...register ,('name',{
-                        required:true,
+                        required:true
 
                     })}
                          />
 
-                         {/* Here You Need One More Filed Taht */}
+                  
                    <input 
                      label="Eamil:"
                       placeholder="Enter Your Eamil"
@@ -73,7 +73,7 @@ function Signup() {
                             }
                        })}/>
 
-                       {/* Here One More Input Fie;d for Password  */}
+                     
 
                        <input
                         label='password'

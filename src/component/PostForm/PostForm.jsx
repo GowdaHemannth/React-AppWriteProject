@@ -61,6 +61,8 @@ function PostForm({ post }) {
         //    Might Think What is These UserData once user loggin You GAot their Dat with id
         const dbpost = await NewObject.createPost({
           ...data,
+          //  Here After Creting Post you will get the I dfrom Usr After he is Logged in
+          //  These is the ID OS THE PERSON LOGGED IN
           userId: UserData.$id,
         });
       }
