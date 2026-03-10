@@ -1,6 +1,6 @@
 import React from "react";
 import { Conatainer, PostForm } from "../component";
-import React from "react";
+
 
 function AddPost() {
   return (

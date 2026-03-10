@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Conatainer, PostForm } from "../component";
 import NewObject from "../appwrite/db";
 
-import React from "react";
+
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 function EditPost() {

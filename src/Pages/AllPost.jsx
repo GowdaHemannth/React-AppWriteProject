@@ -3,14 +3,14 @@ import React from "react";
 import { useState,useEffect } from "react";
 import { Conatainer,PostCard } from "../component";
 import NewObject from "../appwrite/db";
-import React from 'react'
+
 
 function AllPost() {
     const [posts,setPosts]=useState([])
     useEffect(()=>{
-        NewObject.getPosts([]).then((posts)=>{
+      NewObject.getPosts([]).then((posts)=>{
             if(posts){
-                setPosts(posts)
+                setPosts(posts.documents)
             }
         })
         

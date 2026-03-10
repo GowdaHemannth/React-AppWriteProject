@@ -6,7 +6,7 @@ function Home() {
   useEffect(() => {
     NewObject.getPosts().then((posts) => {
       if (posts) {
-        SetPosts(posts);
+        SetPosts(posts.documents);
       }
     });
   }, []);

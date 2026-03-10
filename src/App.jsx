@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import "./index.css";
+import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import authservice from "./appwrite/auth.js";
 import { login, logout } from "./store/authslice.js";
@@ -20,24 +21,21 @@ function App() {
 
   // Here Its just the Effect
   useEffect(() => {
-    // Since Its An Async Call It Will Return the Promise SO uSE THEN aND cATCH OR fINALLY TO gET THE uSER
     authservice
       .GetUser()
       .then((userData) => {
-        // Here Disaptch it Into the Store
-        // Here Call Login
         if (userData) {
-          dispatch(login({ userData }));
+          dispatch(login(userData));
         } else {
           dispatch(logout());
         }
       })
       .catch(() => {
-        console.log("No userInforsmtion has Benn Laoded");
+        console.log("No user information has been loaded");
+        dispatch(logout());
       })
       .finally(() => setloading(false));
-  }, []); // These Empty Array State Defines that It Loads only once when its mounted
-
+  }, [dispatch]);
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -46,6 +44,9 @@ function App() {
     <div className="min-h-screen flex justify-center bg-gray-400 pt-10">
       <div className="w-full max-w-4xl">
         <Header />
+        <main>
+          <Outlet />
+        </main>
         <Footer />
         <h1>Hii Buddy</h1>
       </div>

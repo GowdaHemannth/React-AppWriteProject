@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, hadleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   const { error, setError } = useState("");
   const Login = async (data) => {
     setError("");
@@ -56,7 +56,7 @@ function Login() {
 
     {/*  From Here We Will See the Output Value Here The Usage of the From  */}
     {/*  By Default We Will Be Using the  */}
-    <form onSubmit={hadleSubmit(Login)} className="mt-8">
+    <form onSubmit={handleSubmit(Login)} className="mt-8">
       <div className="space-y-5">
         {/*  Here These Is Not the Actuall Input Field You Might Think these is A Input Field */}
         <input

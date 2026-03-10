@@ -34,9 +34,9 @@ class Sql {
         {
           title,
           content,
-          featuredImage,
+          featuredimage:featuredImage,
           status,
-          userId,
+          userid:userId,
         },
       );
     } catch (error) {
@@ -57,7 +57,7 @@ class Sql {
         {
           title,
           content,
-          featuredImage,
+          featuredimage:featuredImage,
           status,
         },
       );

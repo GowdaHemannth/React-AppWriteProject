@@ -10,7 +10,7 @@ function Signup() {
   const [error, setError] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { register, hadleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
 
   // Here Function to Create the aCCOUNT wE have Already Created it in the authslice
   const CreateAccount = async (data) => {
@@ -48,13 +48,13 @@ function Signup() {
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
               
-                <form onSubmit={hadleSubmit(CreateAccount)}>
+                <form onSubmit={handleSubmit(CreateAccount)}>
                       <div className="className='space-y-5'">
                     
                     <input
                       label='Full-Name'
                         placeholder="Enter Your Full Name"
-                    {...register ,('name',{
+                    {...register ('name',{
                         required:true
 
                     })}
@@ -65,7 +65,7 @@ function Signup() {
                      label="Eamil:"
                       placeholder="Enter Your Eamil"
                       type="email"
-                       {...register,('email',{
+                       {...register('email',{
                         required:true,
                          validate: {
                                 matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
@@ -80,7 +80,7 @@ function Signup() {
                          type="password"
                           placeholder="Enter Your Password"
                            
-                           {...register,('password',{
+                           {...register('password',{
                             required:true
                            })}/>
 

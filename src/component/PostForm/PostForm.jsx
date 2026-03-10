@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Button, input, RTE } from "../index.js";
 import NewObject from "../../appwrite/db.js";
 import { useNavigate } from "react-router-dom";
-import { Button, input, RTE, Select } from "../index.js";
+import {   Select } from "../index.js";
 // You Might Have Forgotten These Thing is Used to Extarxt the States from the
 import { useSelector } from "react-redux";
 function PostForm({ post }) {
@@ -17,7 +17,7 @@ function PostForm({ post }) {
       },
     });
   const navigate = useNavigate();
-  const UserData = useSelector((state) => state.auth.userData);
+  const UserData = useSelector((state) => state.auth.Userdata);
 
   //   Nowe Here Comes the Most Intresting Part here like
   //  These Function Is Usefull When a Person Sub,it the Data it might be Edited Data Or New psot create
@@ -38,18 +38,18 @@ function PostForm({ post }) {
       // tHESE mANY Things Are accepted in file
       // Here You Might thinkg how do i gte these arry  like
       // here in the Input Form WHEN I FILL IMAGE PART IT RETURNS TWO THINGS ONE IS FILE OBJECT OTHER IS JSUT NANE SO WHEN UPLOADING WE NEEDED THESE
-      const file = data.image[0] ? NewObject.uploadFile(data.image[0]) : null;
+      const file = data.image[0] ?await NewObject.uploadFile(data.image[0]) : null;
 
       // Think user Has Updated the Psot tahts why you are Getting file output So hence Here
       if (file) {
-        NewObject.deletePost(post.featuredImage);
+        NewObject.DeleteFile(post.featuredimage);
       }
       // Now Comes the Updation Part
       //    here these Psot id is the Original ID
       const dbPost = await NewObject.updatePost(post.$id, {
         ...data,
         // Just Spread the Data if the File Abvaibe then Update it Through the new File id esle keep the Past one
-        featuredImage: file ? file.$id : post.featuredImage,
+        featuredimage: file ? file.$id : post.featuredimage,
       });
       if (dbPost) {
         navigate(`/post/${dbPost.$id}`);
@@ -66,6 +66,7 @@ function PostForm({ post }) {
           userId: UserData.$id,
         });
       }
+      navigate('/')
     }
   };
 
@@ -74,7 +75,7 @@ function PostForm({ post }) {
     if (value && typeof value === "string") {
       return value
         .trim()
-        .toLowerCase.replace(/[^a-zA-Z\d\s]+/g, "-")
+        .toLowerCase().replace(/[^a-zA-Z\d\s]+/g, "-")
         .replace(/\s/g, "-");
     }
     return "";
@@ -143,7 +144,7 @@ function PostForm({ post }) {
         {post && (
           <div className="w-full mb-4">
             <img
-              src={appwriteService.getFilePreview(post.featuredImage)}
+              src={NewObject.getFilePreview(post.featuredimage)}
               alt={post.title}
               className="rounded-lg"
             />

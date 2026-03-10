@@ -12,7 +12,7 @@ export const authSlice=createSlice({
         // Certain things like Will Upadte Here 
         login:(state,action)=>{
             state.status=true,
-            state.Userdata=action.payload.Userdata;
+            state.Userdata=action.payload;
         },
         logout:(state)=>{
             state.status=false,

@@ -1,7 +1,7 @@
 import React from "react";
-import Link from 'react-router-dom'
+import {Link}from 'react-router-dom'
 import NewObject from "../appwrite/db";
-function PostCard({ $id, title, featuredImage }) {
+function PostCard({ $id, title, featuredimage }) {
   return (
     // Here You Can Say These $id has Unique ID
     <Link to={`/post/${$id}`}> 
@@ -9,7 +9,7 @@ function PostCard({ $id, title, featuredImage }) {
         <div className="w-full justify-center mb-4">
           <img
           // Here3 File Preview Will Give You thE REQUIRED URL THAT IS NESSECRY FOR THE REDiRECTION 
-           src={NewObject.getFilePreview(featuredImage)}
+           src={NewObject.getFilePreview(featuredimage)}
             alt={title}
             className="rounded-xl"
           />

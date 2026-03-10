@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-export default function Protected({ chidren, authentication = true }) {
+export default function Protected({children, authentication = true }) {
   const [Loader, setLoader] = useState(true);
 
   // Here You will be Taking Or Checking Whether
@@ -31,5 +31,5 @@ export default function Protected({ chidren, authentication = true }) {
   }, [authStatus,authentication,navigation]);
 
   //  Here Basically We Are Using these For the Redirection OR sOMETHING LIKE TAHT 
-  return Loader?<h1>Loading...</h1> :<>{chidren}</>
+  return Loader?<h1>Loading...</h1> :<>{children}</>
 }
