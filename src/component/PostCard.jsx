@@ -2,6 +2,8 @@ import React from "react";
 import {Link}from 'react-router-dom'
 import NewObject from "../appwrite/db";
 function PostCard({ $id, title, featuredimage }) {
+  console.log(NewObject.getFilePreview(featuredimage));
+  
   return (
     // Here You Can Say These $id has Unique ID
     <Link to={`/post/${$id}`}> 

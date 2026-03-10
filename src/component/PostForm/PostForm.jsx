@@ -66,6 +66,8 @@ function PostForm({ post }) {
           userId: UserData.$id,
         });
       }
+      console.log("Succefully Added Into the Post");
+      
       navigate('/')
     }
   };
